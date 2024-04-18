@@ -2,7 +2,7 @@ import { useMemo } from "react";
 import { TActivityActions, TActivityState } from "../reducers/activity-reducer"
 import { TActivity } from "../types";
 import { categories } from "../data/categories";
-import { PencilSquareIcon } from "@heroicons/react/24/outline";
+import { PencilSquareIcon, XCircleIcon } from "@heroicons/react/24/outline";
 
 type TActivityListProps = {
     state: TActivityState,
@@ -29,7 +29,7 @@ export default function ActivityList({state, dispatch}: TActivityListProps){
                     activities.map((activity) => (
                         <div
                             key={activity.id}
-                            className="px-5 py-10 bg-white mt-5 flex justify-between"
+                            className="px-5 py-10 bg-white mt-5 flex justify-between shadow"
                         >
                             <div className="space-y-2 relative">
                                 <p
@@ -57,11 +57,18 @@ export default function ActivityList({state, dispatch}: TActivityListProps){
                                         className="h-8 w-8 text-gray-800"
                                     />
                                 </button>
+                                <button
+                                    onClick={() => dispatch({ type: 'delete-activity', payload: {id: activity.id}})}
+                                >
+                                    <XCircleIcon 
+                                        className="h-8 w-8 text-red-500"
+                                    />
+                                </button>
                             </div>
                         </div>
                     ))
                     :
-                        <p></p>
+                        <p className="text-center text-blue-950 font-bold mt-10">Aun no tienes registradas actividades hoy...</p>
             }
         </>
     )

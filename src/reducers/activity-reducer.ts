@@ -11,6 +11,15 @@ export type TActivityActions = {
     payload: {
         id: TActivity['id']
     }
+} |
+{
+    type: 'delete-activity',
+    payload: {
+        id: TActivity['id']
+    }
+} |
+{
+    type: 'restart-app'
 }
 
 export type TActivityState = {
@@ -18,8 +27,13 @@ export type TActivityState = {
     activeId: TActivity['id']
 }
 
+const activitiesFromLocalStorage = (): TActivity[] => {
+    const activities = localStorage.getItem('activities')
+    return activities ? JSON.parse(activities) : []
+}
+
 export const initialState: TActivityState = {
-    activities: [],
+    activities: activitiesFromLocalStorage(),
     activeId: ''
 }
 
@@ -47,6 +61,19 @@ export const activityReducer = (
         return {
             ...state,
             activeId: action.payload.id
+        }
+    }
+    if(action.type === 'delete-activity') {
+        return {
+            ...state,
+            activities: state.activities.filter( activity => activity.id !== action.payload.id),
+            activeId: ''
+        }
+    }
+    if(action.type === 'restart-app') {
+        return {
+            activities: [],
+            activeId: ''
         }
     }
 

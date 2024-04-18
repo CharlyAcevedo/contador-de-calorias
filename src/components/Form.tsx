@@ -32,7 +32,6 @@ export default function Form({state, dispatch}: FormProps){
 
     const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
         const isNumberField = ['category', 'calories'].includes(e.target.id)
-        console.log('pasa', isNumberField, e.target.value)
         setActivities({
             ...activities,
             [e.target.id]: isNumberField ? +e.target.value : e.target.value
